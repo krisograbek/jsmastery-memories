@@ -4,6 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Grow from '@material-ui/core/Grow';
+import { useDispatch } from 'react-redux';
 
 import Posts from "./components/Posts/Posts";
 import Form from "./components/Form/Form";
