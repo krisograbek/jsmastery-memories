@@ -6,6 +6,9 @@ import useStyles from './styles';
 
 const Posts = () => {
   const classes = useStyles();
+  // use selector with a callback that holds
+  // the state of our store
+  // posts comes from combine reducers
   const posts = useSelector((state) => state.posts);
   console.log('posts', posts)
   return (

@@ -14,9 +14,11 @@ import { getPosts } from "./actions/posts";
 
 const App = () => {
   const classes = useStyles();
+  // useDispatch() hook allows us to dispatch actions
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // get all posts
     dispatch(getPosts());
   }, [dispatch])
 
