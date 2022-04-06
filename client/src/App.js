@@ -1,17 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Container from '@material-ui/core/Container';
 import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Grow from '@material-ui/core/Grow';
+import { useDispatch } from 'react-redux';
 
 import Posts from "./components/Posts/Posts";
 import Form from "./components/Form/Form";
 import memories from './images/memories.png';
 import useStyles from './styles';
+import { getPosts } from "./actions/posts";
 
 const App = () => {
   const classes = useStyles();
+  // useDispatch() hook allows us to dispatch actions
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // get all posts
+    dispatch(getPosts());
+  }, [dispatch])
+
   return (
     <Container maxWidth="lg">
       <AppBar className={classes.appBar} position="static" color="inherit" >
