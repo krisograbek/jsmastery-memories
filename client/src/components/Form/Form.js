@@ -7,7 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import FileBase from 'react-file-base64';
 
 import useStyles from './styles';
-import { createPost } from '../../actions/posts';
+import { createPost, updatePost } from '../../actions/posts';
 
 
 const Form = ({ currentId, setCurrentId }) => {
@@ -17,7 +17,13 @@ const Form = ({ currentId, setCurrentId }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createPost(postData));
+
+    if (currentId) {
+      dispatch(updatePost(currentId, postData))
+    } else {
+      dispatch(createPost(postData));
+    }
+
   }
   const clear = () => { }
 
