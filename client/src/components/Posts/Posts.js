@@ -12,7 +12,7 @@ const Posts = ({ setCurrentId }) => {
   // the state of our store
   // posts comes from combine reducers
   const posts = useSelector((state) => state.posts);
-  console.log('posts', posts)
+
   return (
     !posts.length ? <CircularProgress /> : (
       <Grid className={classes.container} container alignItems='stretch' spacing={3}>

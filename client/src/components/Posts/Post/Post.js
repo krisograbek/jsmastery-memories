@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import useStyles from './styles';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
@@ -14,6 +14,7 @@ import moment from 'moment';
 
 const Post = ({ post, setCurrentId }) => {
   const classes = useStyles();
+
   return (
     <Card className={classes.card}>
       <CardMedia className={classes.media} image={post.selectedFile} title={post.title} />
@@ -29,8 +30,9 @@ const Post = ({ post, setCurrentId }) => {
       <div className={classes.detail}>
         <Typography variant="body2" color="textSecondary">{post.tags.map((tag) => `#${tag} `)}</Typography>
       </div>
+      <Typography className={classes.title} variant="h5" gutterBottom>{post.title}</Typography>
       <CardContent>
-        <Typography className={classes.title} variant="h5" gutterBottom>{post.message}</Typography>
+        <Typography variant="h5" gutterBottom>{post.message}</Typography>
       </CardContent>
       <CardActions className={classes.cardActions}>
         <Button size="small" color="primary" onClick={() => { }}>

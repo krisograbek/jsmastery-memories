@@ -14,14 +14,14 @@ import { getPosts } from "./actions/posts";
 
 const App = () => {
   const classes = useStyles();
-  const [currentId, setCurrentId] = useState(null);
+  const [currentId, setCurrentId] = useState(0);
   // useDispatch() hook allows us to dispatch actions
   const dispatch = useDispatch();
 
   useEffect(() => {
     // get all posts
     dispatch(getPosts());
-  }, [dispatch, currentId])
+  }, [currentId, dispatch])
 
   return (
     <Container maxWidth="lg">
