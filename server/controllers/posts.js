@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import PostMessage from "../models/postMessage.js";
 
 export const getPosts = async (req, res) => {
@@ -22,4 +23,25 @@ export const createPost = async (req, res) => {
     // 409 - conflict
     res.status(409).json({ message: error.message });
   }
+}
+
+export const updatePost = async (req, res) => {
+  // extract id from params
+  // e.g. localhost:5000/posts/123 <= id = 123, 
+  // because in routes router.patch('/:id', updatePost);
+  const { id: _id } = req.params;
+  // new post comes from request body
+  const post = req.body;
+
+  // we need to pass the id to the post we're updating
+  // req.body doesn't have it
+  const newPost = { ...post, _id };
+
+  if (!mongoose.Types.ObjectId.isValid(_id)) {
+    return res.status(404).send('No post with given id');
+  }
+
+  const updatedPost = await PostMessage.findByIdAndUpdate(_id, newPost, { new: true });
+
+  res.json(updatedPost);
 }

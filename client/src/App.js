@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Container from '@material-ui/core/Container';
 import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
@@ -14,13 +14,14 @@ import { getPosts } from "./actions/posts";
 
 const App = () => {
   const classes = useStyles();
+  const [currentId, setCurrentId] = useState(0);
   // useDispatch() hook allows us to dispatch actions
   const dispatch = useDispatch();
 
   useEffect(() => {
     // get all posts
     dispatch(getPosts());
-  }, [dispatch])
+  }, [currentId, dispatch])
 
   return (
     <Container maxWidth="lg">
@@ -34,10 +35,10 @@ const App = () => {
         <Container>
           <Grid container justifyContent="space-between" alignItems="stretch" spacing={3}>
             <Grid item xs={12} sm={7}>
-              <Posts />
+              <Posts setCurrentId={setCurrentId} />
             </Grid>
             <Grid item xs={12} sm={4}>
-              <Form />
+              <Form currentId={currentId} setCurrentId={setCurrentId} />
             </Grid>
           </Grid>
         </Container>
