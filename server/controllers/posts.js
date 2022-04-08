@@ -36,7 +36,6 @@ export const updatePost = async (req, res) => {
   // we need to pass the id to the post we're updating
   // req.body doesn't have it
   const newPost = { ...post, _id };
-  console.log("Hi, from update?")
 
   if (!mongoose.Types.ObjectId.isValid(_id)) {
     return res.status(404).send('No post with given id');
@@ -60,17 +59,19 @@ export const deletePost = async (req, res) => {
 }
 
 export const incrementLikes = async (req, res) => {
-  const { id: _id } = req.params;
+  const { id } = req.params;
   console.log("Hi, am I called?")
-  const post = req.body;
 
-  const newPost = { ...post, likeCount: post.likeCount + 1 }
 
-  if (!mongoose.Types.ObjectId.isValid(_id)) {
+  if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).send('No post with given id');
   }
 
-  await PostMessage.findByIdAndUpdate(_id, newPost, { new: true });
+  const post = await PostMessage.findById(id);
 
-  res.json({ message: `Increased Likes for Post with id ${_id} ` });
+  const newPost = { likeCount: post.likeCount + 1 }
+
+  await PostMessage.findByIdAndUpdate(id, newPost, { new: true });
+
+  res.json({ message: `Increased Likes for Post with id ${id} ` });
 }

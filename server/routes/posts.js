@@ -8,6 +8,6 @@ router.get('/', getPosts);
 router.post('/', createPost);
 router.patch('/:id', updatePost);
 router.delete('/:id', deletePost);
-router.patch('/:id', incrementLikes);
+router.patch('/:id/likePost', incrementLikes); // add /likePost to differentiate from updatePost
 
 export default router;
