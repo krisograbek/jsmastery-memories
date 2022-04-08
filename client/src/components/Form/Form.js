@@ -36,6 +36,11 @@ const Form = ({ currentId, setCurrentId }) => {
     setPostData({ creator: '', title: '', message: '', tags: '', selectedFile: '' });
   }
 
+  const splitTags = (e) => {
+    // it didn't work, when I called it directly in a component...
+    setPostData({ ...postData, tags: e.target.value.split(',') })
+  }
+
   return (
     <Paper className={classes.paper}>
       <form autoComplete='off' noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
@@ -70,7 +75,8 @@ const Form = ({ currentId, setCurrentId }) => {
           label="Tags"
           fullWidth
           value={postData.tags}
-          onChange={(e) => setPostData({ ...postData, tags: e.target.value })}
+          // split tags to an array of string
+          onChange={(e) => splitTags(e)}
         />
         <div className={classes.fileInput}>
           <FileBase
