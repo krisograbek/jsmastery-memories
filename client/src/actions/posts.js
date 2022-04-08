@@ -48,3 +48,13 @@ export const deletePost = (id) => async (dispatch) => {
     console.log(error)
   }
 }
+
+export const incrementLikes = (id) => async (dispatch) => {
+  try {
+    await api.incrementLikes(id);
+    const action = { type: 'INCREMENT_LIKES', payload: id };
+    dispatch(action);
+  } catch (error) {
+    console.log(error)
+  }
+}
