@@ -60,9 +60,6 @@ export const deletePost = async (req, res) => {
 
 export const incrementLikes = async (req, res) => {
   const { id } = req.params;
-  console.log("Hi, am I called?")
-
-
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).send('No post with given id');
   }
@@ -71,7 +68,7 @@ export const incrementLikes = async (req, res) => {
 
   const newPost = { likeCount: post.likeCount + 1 }
 
-  await PostMessage.findByIdAndUpdate(id, newPost, { new: true });
+  const updatedPost = await PostMessage.findByIdAndUpdate(id, newPost, { new: true });
 
-  res.json({ message: `Increased Likes for Post with id ${id} ` });
+  res.json(updatedPost);
 }

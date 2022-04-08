@@ -51,8 +51,9 @@ export const deletePost = (id) => async (dispatch) => {
 
 export const incrementLikes = (id) => async (dispatch) => {
   try {
-    await api.incrementLikes(id);
-    const action = { type: 'INCREMENT_LIKES', payload: id };
+    // this response comes from controllers res.json(updatedPost)
+    const { data } = await api.incrementLikes(id);
+    const action = { type: 'INCREMENT_LIKES', payload: data };
     dispatch(action);
   } catch (error) {
     console.log(error)
