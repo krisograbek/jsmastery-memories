@@ -6,10 +6,11 @@ import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import Container from '@material-ui/core/Container';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { GoogleLogin } from 'react-google-login';
 
 import useStyles from './styles';
 import Input from './Input';
-
+import Icon from './icon';
 
 
 const Auth = () => {
@@ -18,9 +19,20 @@ const Auth = () => {
   const [isSignup, setIsSignup] = useState(false);
   const handleSubmit = () => { }
   const handleChange = () => { }
+
   const switchMode = () => setIsSignup((prevIsSignup) => !prevIsSignup)
+
   // toggling
   const handleShowPassword = () => setShowPassord((prevShowPassword) => !prevShowPassword);
+
+  const googleSuccess = async (res) => {
+    console.log(res)
+  }
+
+  const googleFailure = () => {
+    console.log("Google Sign In failed")
+  }
+
   return (
     <Container component="main" maxWidth="xs">
       <Paper className={classes.paper} elevation={3}>
@@ -45,6 +57,26 @@ const Auth = () => {
           <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
             {isSignup ? "Sign Up" : "Sign In"}
           </Button>
+          <GoogleLogin
+            clientId='CLIENT ID'
+            // render how the button is going to look like
+            render={(renderProps) => (
+              <Button
+                className={classes.googleButton}
+                color="primary"
+                fullWidth
+                onClick={renderProps.onClick}
+                disabled={renderProps.disabled}
+                startIcon={<Icon />}
+                variant="contained"
+              >
+                Google Sign In
+              </Button>
+            )}
+            onSuccess={googleSuccess}
+            onFailure={googleFailure}
+            cookiePolicy='single_host_origin'
+          />
           <Grid container justifyContent='flex-end'>
             <Grid item>
               <Button onClick={switchMode}>
