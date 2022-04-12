@@ -14,6 +14,7 @@ import useStyles from './styles';
 import Input from './Input';
 import Icon from './icon';
 import dotenv from 'dotenv';
+import { signin, signup } from '../../actions/auth';
 
 // [3:24:00]
 
@@ -28,7 +29,11 @@ const Auth = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    if (isSignup) {
+      dispatch(signup(formData, history));
+    } else {
+      dispatch(signin(formData, history));
+    }
   }
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.getAttribute('name')]: e.target.value });
