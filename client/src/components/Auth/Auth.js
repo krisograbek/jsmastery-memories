@@ -7,26 +7,46 @@ import Avatar from '@material-ui/core/Avatar';
 import Container from '@material-ui/core/Container';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { GoogleLogin } from 'react-google-login';
+import { useDispatch } from 'react-redux';
 
 import useStyles from './styles';
 import Input from './Input';
 import Icon from './icon';
+import dotenv from 'dotenv';
 
+// [3:24:00]
 
 const Auth = () => {
   const classes = useStyles();
   const [showPassord, setShowPassord] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
+
+  const dispatch = useDispatch();
+
   const handleSubmit = () => { }
   const handleChange = () => { }
 
   const switchMode = () => setIsSignup((prevIsSignup) => !prevIsSignup)
 
+  const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+
   // toggling
   const handleShowPassword = () => setShowPassord((prevShowPassword) => !prevShowPassword);
 
   const googleSuccess = async (res) => {
+    // res gives us access to information
     console.log(res)
+    // the optional chaining operator ?. 
+    // not throwing an error when res is undefined
+    const result = res?.profileObj;
+    const token = res?.tokenId;
+
+    try {
+      // we're dispatching an action from here?
+      dispatch({ type: 'AUTH', payload: { result, token } })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const googleFailure = () => {
@@ -58,7 +78,7 @@ const Auth = () => {
             {isSignup ? "Sign Up" : "Sign In"}
           </Button>
           <GoogleLogin
-            clientId='CLIENT ID'
+            clientId={clientId}
             // render how the button is going to look like
             render={(renderProps) => (
               <Button
