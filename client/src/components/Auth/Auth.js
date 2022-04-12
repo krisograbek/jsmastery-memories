@@ -37,7 +37,6 @@ const Auth = () => {
 
   const googleSuccess = async (res) => {
     // res gives us access to information
-    console.log(res)
     // the optional chaining operator ?. 
     // not throwing an error when res is undefined
     const result = res?.profileObj;
