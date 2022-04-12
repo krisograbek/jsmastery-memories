@@ -8,7 +8,9 @@ export default (state = { authData: null }, action) => {
       console.log(action?.payload)
       return { ...state, authData: action?.payload };
     case LOGOUT:
-      return state;
+      // probably delete from local storage
+      localStorage.removeItem('profile');
+      return { ...state, authData: null };
     default:
       return state;
   }

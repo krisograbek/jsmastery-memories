@@ -8,6 +8,7 @@ import Container from '@material-ui/core/Container';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { GoogleLogin } from 'react-google-login';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import useStyles from './styles';
 import Input from './Input';
@@ -22,6 +23,7 @@ const Auth = () => {
   const [isSignup, setIsSignup] = useState(false);
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleSubmit = () => { }
   const handleChange = () => { }
@@ -43,7 +45,10 @@ const Auth = () => {
 
     try {
       // we're dispatching an action from here?
-      dispatch({ type: 'AUTH', payload: { result, token } })
+      dispatch({ type: 'AUTH', payload: { result, token } });
+      // navigate to the main page
+      history.push('/');
+
     } catch (error) {
       console.log(error)
     }
