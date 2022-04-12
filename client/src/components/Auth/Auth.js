@@ -21,12 +21,18 @@ const Auth = () => {
   const classes = useStyles();
   const [showPassord, setShowPassord] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
+  const [formData, setFormData] = useState({ firstName: '', lastName: '', email: '', password: '', confirmPassword: '' });
 
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const handleSubmit = () => { }
-  const handleChange = () => { }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
+  }
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.getAttribute('name')]: e.target.value });
+  }
 
   const switchMode = () => setIsSignup((prevIsSignup) => !prevIsSignup)
 
@@ -70,13 +76,13 @@ const Auth = () => {
           <Grid container spacing={2}>
             {isSignup && (
               <>
-                <Input name="firstName" label="First Name" handleChange={handleChange} autoFocus half />
-                <Input name="lastName" label="Last Name" handleChange={handleChange} half />
+                <Input name="firstName" value={formData.firstName} label="First Name" handleChange={handleChange} autoFocus half />
+                <Input name="lastName" value={formData.lastName} label="Last Name" handleChange={handleChange} half />
               </>
             )}
-            <Input name="email" label="Email Address" handleChange={handleChange} type="email" />
-            <Input name="password" label="Password" handleChange={handleChange} type={showPassord ? "text" : "password"} handleShowPassword={handleShowPassword} />
-            {isSignup && <Input name="confirmPassord" label="Repeat Passoword" handleChange={handleChange} type="password" />}
+            <Input name="email" value={formData.email} label="Email Address" handleChange={handleChange} type="email" />
+            <Input name="password" value={formData.password} label="Password" handleChange={handleChange} type={showPassord ? "text" : "password"} handleShowPassword={handleShowPassword} />
+            {isSignup && <Input name="confirmPassword" value={formData.confirmPassword} label="Repeat Passoword" handleChange={handleChange} type="password" />}
           </Grid>
           <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
             {isSignup ? "Sign Up" : "Sign In"}
