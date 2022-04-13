@@ -5,7 +5,7 @@ export default (state = { authData: null }, action) => {
     case AUTH:
       // set the data to local storage
       localStorage.setItem('profile', JSON.stringify({ ...action?.payload }));
-      console.log(action?.payload)
+      console.log("Reducers", action?.payload)
       return { ...state, authData: action?.payload };
     case LOGOUT:
       // probably delete from local storage

@@ -39,7 +39,10 @@ const Auth = () => {
     setFormData({ ...formData, [e.target.getAttribute('name')]: e.target.value });
   }
 
-  const switchMode = () => setIsSignup((prevIsSignup) => !prevIsSignup)
+  const switchMode = () => {
+    setIsSignup((prevIsSignup) => !prevIsSignup);
+    setShowPassord(false);
+  }
 
   const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 

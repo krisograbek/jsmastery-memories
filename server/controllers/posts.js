@@ -75,6 +75,7 @@ export const incrementLikes = async (req, res) => {
 
   const index = post.likes.findIndex((id) => id === String(req.userId));
 
+  // in likes we keep the ids of users who liked it
   if (index === -1) {
     post.likes.push(req.userId);
   } else {
