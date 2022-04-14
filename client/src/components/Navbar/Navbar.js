@@ -8,6 +8,7 @@ import Avatar from '@material-ui/core/Avatar';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
+import decode from 'jwt-decode';
 
 import useStyles from './styles';
 import memories from '../../images/memories.png';
@@ -29,6 +30,14 @@ const Navbar = () => {
 
   useEffect(() => {
     const token = user?.tokenId;
+
+    if (token) {
+      const decodedToken = decode(token);
+      // exp is an expiration time
+      // if it is lower than now, it means it already expired
+      // lower than now is in the past
+      if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+    }
 
     setUser(JSON.parse(localStorage.getItem('profile')));
     // it will update when we change the location within our app
