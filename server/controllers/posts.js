@@ -14,7 +14,8 @@ export const getPosts = async (req, res) => {
 export const createPost = async (req, res) => {
   const post = req.body;
 
-  const newPost = new PostMessage(post);
+  // we pass a creator in the request itself and it's not a name anymore, it's an ID
+  const newPost = new PostMessage({ ...post, creator: req.userId, createdAt: new Date().toISOString() });
   try {
     await newPost.save()
     // 201 - successful creation
@@ -60,15 +61,30 @@ export const deletePost = async (req, res) => {
 
 export const incrementLikes = async (req, res) => {
   const { id } = req.params;
+
+  // check if user is authenticated
+  // req.userId comes from auth middleware.
+  // it is possible because auth is called before this controller
+  // see routes/posts.js
+  if (!req.userId) return res.json({ message: "Unauthenticated! " });
+
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).send('No post with given id');
   }
 
   const post = await PostMessage.findById(id);
 
-  const newPost = { likeCount: post.likeCount + 1 }
+  const index = post.likes.findIndex((id) => id === String(req.userId));
 
-  const updatedPost = await PostMessage.findByIdAndUpdate(id, newPost, { new: true });
+  // in likes we keep the ids of users who liked it
+  if (index === -1) {
+    post.likes.push(req.userId);
+  } else {
+    // if index already exists, we want to take our like back (dislike?)
+    post.likes = post.likes.filter((id) => id !== String(req.userId));
+  }
+
+  const updatedPost = await PostMessage.findByIdAndUpdate(id, post, { new: true });
 
   res.json(updatedPost);
 }
