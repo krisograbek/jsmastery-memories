@@ -42,10 +42,12 @@ const Form = ({ currentId, setCurrentId }) => {
     setPostData({ ...postData, tags: e.target.value.split(',') })
   }
 
-  if (!user) {
+  if (!user?.result?.name) {
     return (
       <Paper className={classes.paper}>
-        <Typography variant='h6' align='center'>Please sign in to create own memories and like the other ones</Typography>
+        <Typography variant='h6' align='center'>
+          Please sign in to create own memories and like the other ones
+        </Typography>
       </Paper>
     )
   }
