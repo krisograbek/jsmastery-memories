@@ -16,7 +16,7 @@ import Icon from './icon';
 import dotenv from 'dotenv';
 import { signin, signup } from '../../actions/auth';
 
-// [4:06:00]
+// [4:29:00]
 
 const Auth = () => {
   const classes = useStyles();
